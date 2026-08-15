@@ -1,97 +1,506 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <meta name="description" content="Portfolio of Priyanshu Chaubey - Aspiring AI/ML Enthusiast">
-  <title>Priyanshu Chaubey | Portfolio</title>
-  <link rel="stylesheet" href="style.css">
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Priyanshu Chaubey — AI/ML Engineer</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@400;500;600;700&family=IBM+Plex+Sans:wght@400;500;600&family=IBM+Plex+Mono:wght@400;500;600&display=swap" rel="stylesheet">
+<style>
+  :root{
+    --bg:#0A0E13;
+    --panel:#111820;
+    --panel-2:#0D131A;
+    --border:#1E2833;
+    --text:#E7EDF3;
+    --text-dim:#8A97A8;
+    --text-faint:#5B6572;
+    --amber:#F2A93B;
+    --teal:#4FD1C5;
+    --blue:#7C9CF5;
+    --amber-dim:rgba(242,169,59,0.12);
+    --teal-dim:rgba(79,209,197,0.12);
+    --blue-dim:rgba(124,156,245,0.12);
+    --radius:10px;
+    --maxw:1080px;
+  }
+  *{box-sizing:border-box; margin:0; padding:0;}
+  html{scroll-behavior:smooth;}
+  @media (prefers-reduced-motion: reduce){
+    html{scroll-behavior:auto;}
+    *{animation-duration:0.01ms !important; animation-iteration-count:1 !important; transition-duration:0.01ms !important;}
+  }
+  body{
+    background:var(--bg);
+    color:var(--text);
+    font-family:'IBM Plex Sans', sans-serif;
+    line-height:1.55;
+    -webkit-font-smoothing:antialiased;
+  }
+  body::before{
+    content:"";
+    position:fixed; inset:0;
+    background-image:
+      radial-gradient(ellipse 80% 50% at 50% -10%, rgba(242,169,59,0.07), transparent 60%),
+      linear-gradient(var(--border) 1px, transparent 1px),
+      linear-gradient(90deg, var(--border) 1px, transparent 1px);
+    background-size:100% 100%, 48px 48px, 48px 48px;
+    opacity:0.35;
+    pointer-events:none;
+    z-index:0;
+  }
+  h1,h2,h3{font-family:'Space Grotesk', sans-serif; letter-spacing:-0.01em;}
+  .mono{font-family:'IBM Plex Mono', monospace;}
+  a{color:inherit;}
+  .wrap{max-width:var(--maxw); margin:0 auto; padding:0 24px; position:relative; z-index:1;}
+
+  /* ---- Nav ---- */
+  header{
+    position:sticky; top:0; z-index:50;
+    background:rgba(10,14,19,0.85);
+    backdrop-filter:blur(10px);
+    border-bottom:1px solid var(--border);
+  }
+  .navbar{display:flex; align-items:center; justify-content:space-between; padding:16px 24px; max-width:var(--maxw); margin:0 auto;}
+  .logo{font-family:'Space Grotesk', sans-serif; font-weight:700; font-size:1.05rem; display:flex; align-items:center; gap:8px;}
+  .logo-dot{width:8px; height:8px; border-radius:50%; background:var(--amber); box-shadow:0 0 8px var(--amber); animation:pulse 2s ease-in-out infinite;}
+  @keyframes pulse{0%,100%{opacity:1;} 50%{opacity:0.4;}}
+  nav ul{list-style:none; display:flex; gap:28px;}
+  nav a{
+    font-family:'IBM Plex Mono', monospace; font-size:0.8rem; color:var(--text-dim);
+    text-decoration:none; text-transform:lowercase; transition:color 0.2s;
+  }
+  nav a:hover{color:var(--amber);}
+  .nav-toggle{display:none; background:none; border:1px solid var(--border); color:var(--text); border-radius:6px; padding:8px 10px; font-size:1rem; cursor:pointer;}
+
+  @media (max-width:720px){
+    nav ul{
+      position:fixed; top:57px; right:0; left:0;
+      background:var(--panel); border-bottom:1px solid var(--border);
+      flex-direction:column; padding:20px 24px; gap:16px;
+      transform:translateY(-120%); transition:transform 0.25s ease;
+    }
+    nav ul.open{transform:translateY(0);}
+    .nav-toggle{display:block;}
+  }
+
+  /* ---- Hero ---- */
+  .hero{padding:88px 0 64px; position:relative;}
+  .eyebrow{
+    font-family:'IBM Plex Mono', monospace; font-size:0.82rem; color:var(--amber);
+    display:flex; align-items:center; gap:10px; margin-bottom:18px;
+  }
+  .eyebrow .cursor{display:inline-block; width:8px; height:1em; background:var(--amber); animation:blink 1s step-end infinite; vertical-align:text-bottom;}
+  @keyframes blink{50%{opacity:0;}}
+  .hero h1{font-size:clamp(2.4rem, 6vw, 4rem); font-weight:700; line-height:1.05; margin-bottom:14px;}
+  .hero h1 span{color:var(--amber);}
+  .hero-role{font-size:1.15rem; color:var(--text-dim); font-weight:500; margin-bottom:16px; font-family:'Space Grotesk',sans-serif;}
+  .hero-desc{max-width:620px; color:var(--text-dim); font-size:1rem; margin-bottom:36px;}
+
+  .stat-bar{
+    display:grid; grid-template-columns:repeat(4,1fr); gap:1px;
+    background:var(--border); border:1px solid var(--border); border-radius:var(--radius);
+    overflow:hidden; margin-bottom:36px;
+  }
+  .stat{background:var(--panel); padding:18px 16px; position:relative;}
+  .stat-led{width:6px; height:6px; border-radius:50%; background:var(--teal); box-shadow:0 0 6px var(--teal); position:absolute; top:14px; right:14px; animation:pulse 2.4s ease-in-out infinite;}
+  .stat-value{font-family:'Space Grotesk',sans-serif; font-weight:700; font-size:1.6rem; color:var(--text);}
+  .stat-label{font-family:'IBM Plex Mono', monospace; font-size:0.7rem; color:var(--text-faint); text-transform:uppercase; letter-spacing:0.04em; margin-top:4px;}
+  @media (max-width:640px){.stat-bar{grid-template-columns:repeat(2,1fr);}}
+
+  .cta-row{display:flex; gap:12px; flex-wrap:wrap;}
+  .btn{
+    font-family:'IBM Plex Mono', monospace; font-size:0.82rem;
+    padding:11px 20px; border-radius:8px; text-decoration:none;
+    display:inline-flex; align-items:center; gap:8px; transition:all 0.2s; border:1px solid transparent;
+  }
+  .btn-primary{background:var(--amber); color:#1A1305; font-weight:600;}
+  .btn-primary:hover{background:#ffc266; transform:translateY(-1px);}
+  .btn-ghost{border-color:var(--border); color:var(--text);}
+  .btn-ghost:hover{border-color:var(--amber); color:var(--amber);}
+
+  /* ---- Section shell ---- */
+  section{padding:64px 0; border-top:1px solid var(--border);}
+  .section-head{display:flex; align-items:baseline; gap:14px; margin-bottom:36px;}
+  .section-num{font-family:'IBM Plex Mono', monospace; color:var(--text-faint); font-size:0.85rem;}
+  .section-head h2{font-size:1.6rem;}
+
+  /* ---- Experience (log style) ---- */
+  .log-entry{
+    background:var(--panel); border:1px solid var(--border); border-radius:var(--radius);
+    padding:24px 26px; position:relative; overflow:hidden;
+  }
+  .log-entry::before{content:""; position:absolute; left:0; top:0; bottom:0; width:3px; background:var(--amber);}
+  .log-meta{display:flex; justify-content:space-between; align-items:center; flex-wrap:wrap; gap:8px; margin-bottom:14px;}
+  .log-time{font-family:'IBM Plex Mono', monospace; font-size:0.75rem; color:var(--amber); background:var(--amber-dim); padding:4px 10px; border-radius:5px;}
+  .log-title{font-family:'Space Grotesk',sans-serif; font-weight:600; font-size:1.1rem;}
+  .log-org{color:var(--text-dim); font-size:0.9rem;}
+  .log-entry ul{list-style:none; margin-top:12px; display:flex; flex-direction:column; gap:8px;}
+  .log-entry li{padding-left:20px; position:relative; color:var(--text-dim); font-size:0.92rem;}
+  .log-entry li::before{content:"›"; position:absolute; left:0; color:var(--teal); font-family:'IBM Plex Mono',monospace;}
+
+  /* ---- Projects ---- */
+  .filter-row{display:flex; gap:10px; flex-wrap:wrap; margin-bottom:28px;}
+  .filter-pill{
+    font-family:'IBM Plex Mono', monospace; font-size:0.78rem;
+    padding:8px 16px; border-radius:20px; border:1px solid var(--border);
+    background:transparent; color:var(--text-dim); cursor:pointer; transition:all 0.2s;
+  }
+  .filter-pill:hover{border-color:var(--text-dim); color:var(--text);}
+  .filter-pill.active{background:var(--text); color:var(--bg); border-color:var(--text); font-weight:600;}
+
+  .project-grid{display:grid; grid-template-columns:repeat(2,1fr); gap:18px;}
+  @media (max-width:760px){.project-grid{grid-template-columns:1fr;}}
+
+  .card{
+    background:var(--panel); border:1px solid var(--border); border-radius:var(--radius);
+    padding:22px 24px; display:flex; flex-direction:column; gap:12px;
+    transition:transform 0.25s ease, border-color 0.25s ease; opacity:0; transform:translateY(14px);
+  }
+  .card.reveal{opacity:1; transform:translateY(0);}
+  .card:hover{transform:translateY(-3px); border-color:var(--text-faint);}
+  .card.hidden{display:none;}
+
+  .card-top{display:flex; justify-content:space-between; align-items:flex-start; gap:10px;}
+  .card-title{font-family:'Space Grotesk',sans-serif; font-weight:600; font-size:1.08rem;}
+  .cat-tag{font-family:'IBM Plex Mono',monospace; font-size:0.68rem; padding:4px 9px; border-radius:5px; white-space:nowrap; text-transform:uppercase; letter-spacing:0.03em;}
+  .cat-genai{background:var(--amber-dim); color:var(--amber);}
+  .cat-cv{background:var(--teal-dim); color:var(--teal);}
+  .cat-data{background:var(--blue-dim); color:var(--blue);}
+
+  .metric-badge{
+    display:inline-block; font-family:'IBM Plex Mono',monospace; font-size:0.75rem;
+    color:var(--teal); border:1px solid var(--teal); border-radius:5px; padding:3px 9px; width:fit-content;
+  }
+
+  .card ul{list-style:none; display:flex; flex-direction:column; gap:6px;}
+  .card li{padding-left:16px; position:relative; color:var(--text-dim); font-size:0.87rem; line-height:1.5;}
+  .card li::before{content:"—"; position:absolute; left:0; color:var(--text-faint);}
+
+  .tech-row{display:flex; flex-wrap:wrap; gap:6px; margin-top:auto; padding-top:8px;}
+  .tech-chip{font-family:'IBM Plex Mono',monospace; font-size:0.68rem; color:var(--text-faint); border:1px solid var(--border); padding:3px 8px; border-radius:4px;}
+
+  /* ---- Skills ---- */
+  .skill-stack{display:flex; flex-direction:column; gap:16px;}
+  .skill-row{display:grid; grid-template-columns:160px 1fr; gap:18px; align-items:start; padding:14px 0; border-bottom:1px solid var(--border);}
+  .skill-row:last-child{border-bottom:none;}
+  .skill-label{font-family:'IBM Plex Mono',monospace; font-size:0.75rem; color:var(--text-faint); text-transform:uppercase; letter-spacing:0.04em; padding-top:4px;}
+  .skill-chips{display:flex; flex-wrap:wrap; gap:8px;}
+  .skill-chip{
+    font-family:'IBM Plex Mono',monospace; font-size:0.8rem; color:var(--text);
+    background:var(--panel); border:1px solid var(--border); padding:6px 12px; border-radius:6px;
+  }
+  @media (max-width:600px){.skill-row{grid-template-columns:1fr;}}
+
+  /* ---- Education / certs ---- */
+  .edu-cert-grid{display:grid; grid-template-columns:1.1fr 1fr; gap:20px;}
+  @media (max-width:760px){.edu-cert-grid{grid-template-columns:1fr;}}
+  .edu-card{background:var(--panel); border:1px solid var(--border); border-radius:var(--radius); padding:24px 26px;}
+  .edu-card h3{font-size:1.05rem; margin-bottom:6px;}
+  .edu-sub{color:var(--text-dim); font-size:0.88rem; margin-bottom:14px;}
+  .edu-cgpa{font-family:'IBM Plex Mono',monospace; color:var(--amber); font-size:0.85rem;}
+  .cert-list{display:flex; flex-direction:column; gap:10px;}
+  .cert-item{
+    display:flex; align-items:center; gap:10px; background:var(--panel); border:1px solid var(--border);
+    border-radius:8px; padding:12px 16px; font-size:0.85rem; color:var(--text-dim);
+  }
+  .cert-item::before{content:"✓"; color:var(--teal); font-family:'IBM Plex Mono',monospace; font-weight:600;}
+
+  /* ---- Footer / contact ---- */
+  footer{padding:56px 0 40px; text-align:center;}
+  footer h2{font-size:1.7rem; margin-bottom:10px;}
+  footer p{color:var(--text-dim); margin-bottom:28px;}
+  .footer-links{display:flex; justify-content:center; gap:14px; flex-wrap:wrap; margin-bottom:40px;}
+  .foot-note{font-family:'IBM Plex Mono',monospace; font-size:0.72rem; color:var(--text-faint);}
+</style>
 </head>
 <body>
-  <header>
-    <h1>Priyanshu Chaubey</h1>
-    <p>Aspiring AI/ML & Data Science Enthusiast</p>
-  </header>
 
-  <section id="about">
-    <h2>About Me</h2>
-    <img src="priyanshuchaubey.jpg" alt="Priyanshu Chaubey" class="profile-pic">
-    <p>I’m a 3rd-year B.Tech student in Artificial Intelligence & Robotics at Dayananda Sagar University, passionate about Machine Learning, Deep Learning, and Computer Vision. I love building AI-driven applications and exploring the intersection of data, algorithms, and real-world problem solving.</p>
+<header>
+  <div class="navbar">
+    <div class="logo"><span class="logo-dot"></span>PRIYANSHU.AI</div>
+    <button class="nav-toggle" id="navToggle" aria-label="Toggle menu">☰</button>
+    <nav>
+      <ul id="navList">
+        <li><a href="#overview">overview</a></li>
+        <li><a href="#experience">experience</a></li>
+        <li><a href="#projects">projects</a></li>
+        <li><a href="#skills">skills</a></li>
+        <li><a href="#education">education</a></li>
+        <li><a href="#contact">contact</a></li>
+      </ul>
+    </nav>
+  </div>
+</header>
+
+<main class="wrap">
+
+  <!-- HERO -->
+  <section class="hero" id="overview" style="border-top:none;">
+    <div class="eyebrow mono">$ whoami<span class="cursor"></span></div>
+    <h1>Priyanshu <span>Chaubey</span></h1>
+    <div class="hero-role">AI/ML Engineer — GenAI systems, Computer Vision, Applied Data Science</div>
+    <p class="hero-desc">Final-year AI & Robotics engineer who ships full end-to-end AI products — from RAG pipelines and LLM-powered platforms to a medical-imaging model combining CNNs with reinforcement learning.</p>
+
+    <div class="stat-bar" id="statBar">
+      <div class="stat"><div class="stat-led"></div><div class="stat-value" data-target="8.98" data-decimal="2">0</div><div class="stat-label">CGPA / 10</div></div>
+      <div class="stat"><div class="stat-led"></div><div class="stat-value" data-target="7">0</div><div class="stat-label">Shipped Projects</div></div>
+      <div class="stat"><div class="stat-led"></div><div class="stat-value" data-target="96" data-suffix="%">0</div><div class="stat-label">Best Model Accuracy</div></div>
+      <div class="stat"><div class="stat-led"></div><div class="stat-value" data-target="4">0</div><div class="stat-label">Certifications</div></div>
+    </div>
+
+    <div class="cta-row">
+      <a class="btn btn-primary" href="https://github.com/PriyanshuChaubey" target="_blank" rel="noopener">View GitHub →</a>
+      <a class="btn btn-ghost" href="https://www.linkedin.com/in/priyanshu-chaubey-03007b286/" target="_blank" rel="noopener">LinkedIn</a>
+      <a class="btn btn-ghost" href="mailto:priyanshuchaubey6523@gmail.com">Email Me</a>
+    </div>
   </section>
 
-  <section id="skills">
-    <h2>Skills</h2>
-    <h3>Languages & Frameworks</h3>
-    <p>Python, Java, C, TensorFlow, Keras, OpenCV, Streamlit</p>
-
-    <h3>ML Concepts</h3>
-    <p>CNNs, NLP, Data Preprocessing, Feature Engineering, Model Evaluation</p>
-
-    <h3>Tools & Platforms</h3>
-    <p>Power BI, Tableau, Google Colab, Jupyter, Git</p>
-
-    <h3>Libraries</h3>
-    <p>NumPy, Pandas, scikit-learn, NLTK, Matplotlib, Seaborn</p>
-  </section>
-
+  <!-- EXPERIENCE -->
   <section id="experience">
-    <h2>Experience</h2>
-    <div class="project">
-      <h3>Data Analytics Intern — Future Interns (Remote)</h3>
-      <p><em>Jun 2025 – Aug 2025</em></p>
+    <div class="section-head"><span class="section-num mono">01</span><h2>Experience</h2></div>
+    <div class="log-entry">
+      <div class="log-meta">
+        <div>
+          <div class="log-title">Data Science Intern</div>
+          <div class="log-org">Saiket Systems · Remote</div>
+        </div>
+        <div class="log-time">JUN 2025 → AUG 2025</div>
+      </div>
       <ul>
-        <li>Developed interactive Power BI dashboards for e-commerce and marketing datasets.</li>
-        <li>Performed customer analytics and EDA to derive insights using Power BI and Excel.</li>
-        <li>Conducted feedback sentiment analysis using Python, Pandas, and TextBlob.</li>
+        <li>Cleaned, preprocessed, and engineered features on production datasets; built and evaluated multiple ML/DL models using accuracy, precision, recall, and F1-score</li>
+        <li>Visualized model results and key data insights (Matplotlib, Seaborn) to support data-driven decision making</li>
       </ul>
     </div>
   </section>
 
+  <!-- PROJECTS -->
   <section id="projects">
-    <h2>Projects</h2>
+    <div class="section-head"><span class="section-num mono">02</span><h2>Projects</h2></div>
 
-    <div class="project">
-      <h3>🎬 Movie Recommender System</h3>
-      <p>Built a content-based recommender system using NLP and cosine similarity with Streamlit app deployment.</p>
+    <div class="filter-row" id="filterRow">
+      <button class="filter-pill active" data-filter="all">All</button>
+      <button class="filter-pill" data-filter="genai">GenAI / LLM</button>
+      <button class="filter-pill" data-filter="cv">Computer Vision</button>
+      <button class="filter-pill" data-filter="data">Data Science / ML</button>
     </div>
 
-    <div class="project">
-      <h3>🧠 Stomach Cancer Detection (CNN)</h3>
-      <p>Developed a CNN model using TensorFlow and Keras to classify endoscopic images into tumorous vs. non-tumorous categories.</p>
-    </div>
+    <div class="project-grid" id="projectGrid">
 
-    <div class="project">
-      <h3>📊 E-commerce Sales Data Analysis</h3>
-      <p>Performed EDA using Python and Plotly to visualize sales and uncover customer trends.</p>
+      <div class="card" data-cat="genai">
+        <div class="card-top"><div class="card-title">ATS Resume Scorer</div><span class="cat-tag cat-genai">GenAI / LLM</span></div>
+        <ul>
+          <li>Full-stack resume analysis platform (FastAPI + Streamlit) scoring resumes across 5 weighted dimensions using Llama 3.3 via Groq to parse resumes into structured JSON</li>
+          <li>Semantic skill validation with Sentence-BERT + cosine similarity to verify claimed skills are backed by real evidence</li>
+          <li>Secure REST API with JWT auth (symmetric & asymmetric signing), per-user PostgreSQL history via Supabase</li>
+          <li>Job-description matching (fuzzy + semantic) generating prioritized feedback and downloadable PDF reports</li>
+        </ul>
+        <div class="tech-row">
+          <span class="tech-chip">FastAPI</span><span class="tech-chip">Streamlit</span><span class="tech-chip">spaCy</span><span class="tech-chip">Sentence-BERT</span><span class="tech-chip">Groq</span><span class="tech-chip">Supabase</span>
+        </div>
+      </div>
+
+      <div class="card" data-cat="genai">
+        <div class="card-top"><div class="card-title">RAG Pipeline — Document QA</div><span class="cat-tag cat-genai">GenAI / LLM</span></div>
+        <ul>
+          <li>Production-style Retrieval-Augmented Generation pipeline grounding LLM answers in real documents to eliminate hallucination</li>
+          <li>Chunked and embedded documents (all-MiniLM-L6-v2), stored in ChromaDB with cosine-similarity retrieval</li>
+          <li>Integrated Qwen3-32B via Groq for fast, context-grounded answers</li>
+        </ul>
+        <div class="tech-row">
+          <span class="tech-chip">LangChain</span><span class="tech-chip">ChromaDB</span><span class="tech-chip">Groq</span><span class="tech-chip">PyPDFLoader</span>
+        </div>
+      </div>
+
+      <div class="card" data-cat="genai">
+        <div class="card-top"><div class="card-title">Indian Language Chatbot</div><span class="cat-tag cat-genai">GenAI / LLM</span></div>
+        <ul>
+          <li>Multilingual conversational AI supporting 13 Indian languages with real-time language detection and Hinglish understanding</li>
+          <li>Conversation memory for contextual, multi-turn responses</li>
+          <li>Streamlit interface with user-controlled response language</li>
+        </ul>
+        <div class="tech-row">
+          <span class="tech-chip">Sarvam AI</span><span class="tech-chip">Streamlit</span><span class="tech-chip">Python</span>
+        </div>
+      </div>
+
+      <div class="card" data-cat="cv">
+        <div class="card-top"><div class="card-title">Stomach Tumor Detection — CNN + DQN</div><span class="cat-tag cat-cv">Computer Vision</span></div>
+        <div class="metric-badge">96% CNN accuracy · 93–95% final accuracy</div>
+        <ul>
+          <li>Hybrid Deep Learning + Reinforcement Learning pipeline for tumor detection from endoscopic images — MobileNetV2 for feature extraction, a DQN agent for classification</li>
+          <li>Custom medical-sensitive reward function that heavily penalized false negatives to minimize missed diagnoses</li>
+          <li>Stratified train/test split with augmentation (resize, rotation, zoom, flips)</li>
+        </ul>
+        <div class="tech-row">
+          <span class="tech-chip">TensorFlow</span><span class="tech-chip">Keras</span><span class="tech-chip">MobileNetV2</span><span class="tech-chip">Deep Q-Learning</span>
+        </div>
+      </div>
+
+      <div class="card" data-cat="data">
+        <div class="card-top"><div class="card-title">SmartCart Customer Segmentation</div><span class="cat-tag cat-data">Data Science</span></div>
+        <ul>
+          <li>Unsupervised segmentation system engineering behavioral features (age, tenure, spend, household size), reduced via PCA</li>
+          <li>KMeans clustering tuned with the Elbow Method + Silhouette Score, segmenting 2,240 customers into distinct groups with 3D visualization</li>
+          <li>Surfaced behavioral patterns to inform targeted marketing and retention strategy</li>
+        </ul>
+        <div class="tech-row">
+          <span class="tech-chip">scikit-learn</span><span class="tech-chip">PCA</span><span class="tech-chip">KMeans</span>
+        </div>
+      </div>
+
+      <div class="card" data-cat="data">
+        <div class="card-top"><div class="card-title">CreditWise — Loan Approval Prediction</div><span class="cat-tag cat-data">Data Science</span></div>
+        <ul>
+          <li>End-to-end supervised ML pipeline predicting loan approval, simulating a real-world credit risk assessment workflow</li>
+          <li>Engineered non-linear features (squared DTI ratio, credit score); compared KNN, Logistic Regression, Naive Bayes</li>
+          <li>Logistic Regression selected as best performer — highest accuracy, most balanced precision/recall</li>
+        </ul>
+        <div class="tech-row">
+          <span class="tech-chip">scikit-learn</span><span class="tech-chip">Python</span>
+        </div>
+      </div>
+
+      <div class="card" data-cat="data">
+        <div class="card-top"><div class="card-title">E-commerce Sales Data Analysis</div><span class="cat-tag cat-data">Data Science</span></div>
+        <ul>
+          <li>Exploratory data analysis identifying revenue trends and customer behavior patterns</li>
+          <li>Interactive Plotly visualizations surfacing key business insights for decision-making</li>
+        </ul>
+        <div class="tech-row">
+          <span class="tech-chip">Pandas</span><span class="tech-chip">Plotly</span>
+        </div>
+      </div>
+
     </div>
   </section>
 
-  <section id="certifications">
-    <h2>Certifications</h2>
-    <ul>
-      <li>IBM Python for Data Science — Credly (Aug 2025)</li>
-      <li>Deloitte Australia Data Analytics Simulation — Forage (Aug 2025)</li>
-      <li>AWS Cloud Practitioner Essentials — (Oct 2025)</li>
-      <li>Operationalize Generative AI Applications (FMOps/LLMOps) — (Oct 2025)</li>
-    </ul>
+  <!-- SKILLS -->
+  <section id="skills">
+    <div class="section-head"><span class="section-num mono">03</span><h2>Skills</h2></div>
+    <div class="skill-stack">
+      <div class="skill-row">
+        <div class="skill-label">Languages</div>
+        <div class="skill-chips">
+          <span class="skill-chip">Python</span><span class="skill-chip">Java</span><span class="skill-chip">C</span><span class="skill-chip">SQL</span>
+        </div>
+      </div>
+      <div class="skill-row">
+        <div class="skill-label">Frameworks & Libraries</div>
+        <div class="skill-chips">
+          <span class="skill-chip">TensorFlow</span><span class="skill-chip">Keras</span><span class="skill-chip">LangChain</span><span class="skill-chip">FastAPI</span><span class="skill-chip">Flask</span><span class="skill-chip">Streamlit</span><span class="skill-chip">OpenCV</span><span class="skill-chip">scikit-learn</span><span class="skill-chip">Pandas</span><span class="skill-chip">NumPy</span><span class="skill-chip">NLTK</span><span class="skill-chip">Matplotlib</span><span class="skill-chip">Seaborn</span>
+        </div>
+      </div>
+      <div class="skill-row">
+        <div class="skill-label">Databases</div>
+        <div class="skill-chips">
+          <span class="skill-chip">MySQL</span><span class="skill-chip">ChromaDB</span>
+        </div>
+      </div>
+      <div class="skill-row">
+        <div class="skill-label">Tools & Platforms</div>
+        <div class="skill-chips">
+          <span class="skill-chip">Git</span><span class="skill-chip">GitHub</span><span class="skill-chip">Docker</span><span class="skill-chip">Power BI</span><span class="skill-chip">Google Colab</span><span class="skill-chip">Jupyter Notebook</span>
+        </div>
+      </div>
+      <div class="skill-row">
+        <div class="skill-label">Core Concepts</div>
+        <div class="skill-chips">
+          <span class="skill-chip">Machine Learning</span><span class="skill-chip">Deep Learning</span><span class="skill-chip">NLP</span><span class="skill-chip">Reinforcement Learning</span><span class="skill-chip">Generative AI</span><span class="skill-chip">Feature Engineering</span><span class="skill-chip">Data Structures & Algorithms</span><span class="skill-chip">OOP</span><span class="skill-chip">DBMS</span>
+        </div>
+      </div>
+    </div>
   </section>
 
+  <!-- EDUCATION + CERTS -->
   <section id="education">
-    <h2>Education</h2>
-    <p><b>B.Tech in Artificial Intelligence & Robotics</b><br>
-    Dayananda Sagar University, Bangalore (2023–2027)</p>
+    <div class="section-head"><span class="section-num mono">04</span><h2>Education & Certifications</h2></div>
+    <div class="edu-cert-grid">
+      <div class="edu-card">
+        <h3>B.Tech, Artificial Intelligence & Robotics</h3>
+        <div class="edu-sub">Dayananda Sagar University, Bangalore · 2023 – 2027 (Expected)</div>
+        <div class="edu-cgpa">CGPA: 8.98 / 10</div>
+      </div>
+      <div class="cert-list">
+        <div class="cert-item">AWS Cloud Practitioner Essentials</div>
+        <div class="cert-item">Operationalize Generative AI Applications (FMOps/LLMOps)</div>
+        <div class="cert-item">IBM Python for Data Science — Credly</div>
+        <div class="cert-item">Deloitte Australia Data Analytics Job Simulation — Forage</div>
+      </div>
+    </div>
   </section>
 
-  <section id="contact">
-    <h2>Contact</h2>
-    <p>Email: <a href="mailto:chaubeypriyanshu548@gmail.com">chaubeypriyanshu548@gmail.com</a></p>
-    <p>LinkedIn: <a href="https://www.linkedin.com/in/priyanshu-chaubey-03007b286/" target="_blank">linkedin.com/in/priyanshu-chaubey</a></p>
-    <p>GitHub: <a href="https://github.com/PriyanshuChaubey" target="_blank">github.com/PriyanshuChaubey</a></p>
-  </section>
-
-  <footer>
-    <p>© 2025 Priyanshu Chaubey | All Rights Reserved</p>
+  <!-- CONTACT -->
+  <footer id="contact">
+    <h2>Let's build something.</h2>
+    <p>Open to AI/ML roles — GenAI, Computer Vision, and applied ML engineering.</p>
+    <div class="footer-links">
+      <a class="btn btn-primary" href="mailto:priyanshuchaubey6523@gmail.com">priyanshuchaubey6523@gmail.com</a>
+      <a class="btn btn-ghost" href="https://github.com/PriyanshuChaubey" target="_blank" rel="noopener">GitHub</a>
+      <a class="btn btn-ghost" href="https://www.linkedin.com/in/priyanshu-chaubey-03007b286/" target="_blank" rel="noopener">LinkedIn</a>
+    </div>
+    <div class="foot-note">Bangalore, India</div>
   </footer>
+
+</main>
+
+<script>
+  // Mobile nav toggle
+  const navToggle = document.getElementById('navToggle');
+  const navList = document.getElementById('navList');
+  navToggle.addEventListener('click', () => navList.classList.toggle('open'));
+  navList.querySelectorAll('a').forEach(a => a.addEventListener('click', () => navList.classList.remove('open')));
+
+  // Count-up stats on scroll into view
+  const statValues = document.querySelectorAll('.stat-value');
+  let statsAnimated = false;
+  function animateStats(){
+    if (statsAnimated) return;
+    statsAnimated = true;
+    statValues.forEach(el => {
+      const target = parseFloat(el.dataset.target);
+      const decimals = parseInt(el.dataset.decimal || "0");
+      const suffix = el.dataset.suffix || "";
+      const duration = 1100;
+      const start = performance.now();
+      function tick(now){
+        const p = Math.min((now - start) / duration, 1);
+        const eased = 1 - Math.pow(1 - p, 3);
+        const val = target * eased;
+        el.textContent = val.toFixed(decimals) + suffix;
+        if (p < 1) requestAnimationFrame(tick);
+        else el.textContent = target.toFixed(decimals) + suffix;
+      }
+      requestAnimationFrame(tick);
+    });
+  }
+  const statObserver = new IntersectionObserver((entries) => {
+    entries.forEach(e => { if (e.isIntersecting) animateStats(); });
+  }, { threshold: 0.4 });
+  statObserver.observe(document.getElementById('statBar'));
+
+  // Reveal cards on scroll
+  const cards = document.querySelectorAll('.card');
+  const cardObserver = new IntersectionObserver((entries) => {
+    entries.forEach(e => { if (e.isIntersecting) e.target.classList.add('reveal'); });
+  }, { threshold: 0.15 });
+  cards.forEach(c => cardObserver.observe(c));
+
+  // Project filter
+  const filterBtns = document.querySelectorAll('.filter-pill');
+  filterBtns.forEach(btn => {
+    btn.addEventListener('click', () => {
+      filterBtns.forEach(b => b.classList.remove('active'));
+      btn.classList.add('active');
+      const filter = btn.dataset.filter;
+      cards.forEach(card => {
+        const show = filter === 'all' || card.dataset.cat === filter;
+        card.classList.toggle('hidden', !show);
+      });
+    });
+  });
+</script>
+
 </body>
 </html>
-
